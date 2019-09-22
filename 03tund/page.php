@@ -3,10 +3,17 @@
 	$photoDir = "../photos/";
 	$picFileTypes = ["image/jpeg", "image/png"];
 	$fullTimeNow = date("d.m.Y H:i:s");
+	$partialTime = date("H:i:s");
 	$hourNow = date("H");
 	$minutesNow = date("i");
+	$weekDayToday = date("N");
+	$monthToday = date("m");
+	$dayToday = date("d");
+	$year = date("Y");
+	//setlocale(LC_TIME, 'et_EE');
 	
 	$weekDaysET = ["esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev", "pühapäev"];
+	$monthsET = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"];
 	
 	$partOfDay = "hägune aeg";
 	if($hourNow < 8) {
@@ -48,7 +55,15 @@
 		$semesterInfoHTML .= round($elapsedValue / $durationValue * 100, 1) ."%";
 		$semesterInfoHTML .="</meter";
 		$semesterInfoHTML .="</p>";
-	}
+		
+	} elseif($elapsedValue < 0) {
+			$semesterInfoHTML = "<p>Semester pole veel alganud!";
+	} else {
+			$semesterInfoHTML = "<p>Semester on läbi saanud!";
+	}	
+	
+	$kuupaev = "<p>Lehe avamise hetkel oli aeg: " .$dayToday. ".". $monthsET[$monthToday-1]." ". $year. " " . $weekDaysET[$weekDayToday-1] ." , kell ". $partialTime . "</p>";
+	
 	
 	//foto lisamine lehele 
 	$allPhotos = [];
@@ -86,7 +101,8 @@
 	echo $semesterInfoHTML;
   ?>
   <hr>
-  <p>Lehe avamise hetkel oli aeg: <?php echo $fullTimeNow; ?> .</p>
+  <?php echo $kuupaev; 
+  ?> 
   
   <?php
 	echo "<p>Lehe avamise hetkel oli " . $partOfDay . ".</p>";
