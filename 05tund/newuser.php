@@ -41,10 +41,42 @@
         $nameError = " Palun sisestage eesnimi!";
       } //eesnime kontrolli lõpp
 
+
+      if(isset($_POST["surName"]) and !empty($_POST["surName"])) {
+        $surname = test_input($_POST["surName"]);
+      } else {
+        $surnameError = " Palun sisestage Perekonnanimi!";
+      }
+
+
+      if(isset($_POST["gender"]) and !empty($_POST["gender"])) {
+        $gender = test_input($_POST["gender"]);
+      } else {
+        $genderError = " Palun sisestage sugu!";
+      }
+
+
+      if(isset($_POST["email"]) and !empty($_POST["email"])) {
+        $email = test_input($_POST["email"]);
+      } else {
+        $emailError = " Palun sisestage email!";
+      }
+
+
+      if(isset($_POST["password"]) and !empty($_POST["password"]) and strlen($_POST["password"]) > 8) { 
+        if ($_POST["password"] == $_POST["confirmpassword"]) {
+          $password = test_input($_POST["password"]);
+        }
+      } 
+
+      else {
+        $passwordError = " Palun sisestage parool!";
+      }
+
       //ajutine
-      $surName = ($_POST["surName"]);
-      $gender = ($_POST["gender"]);
-      $email = test_input($_POST["email"]);
+     // $surName = ($_POST["surName"]);
+     // $gender = ($_POST["gender"]);
+     // $email = test_input($_POST["email"]);
       //strlen($_POST["password"]) < 8 siis on liiga lühike
       //
 
@@ -81,7 +113,7 @@
  
  //kui kõik on korras, salvestame 
  if (empty($nameError . $surnameError . $birthMonthError . $birthYearError . $birthDayError . $birthDateError . $genderError . $emailError . $passwordError . $confirmpasswordError )) /*and empty(surnameError) and empty(birthMonthError) and empty(birthYearError) and empty(birthDayError) and empty(birthDateError) and empty(genderError) and empty(emailError) and empty(passwordError) and empty(confirmpasswordError))*/ {
-   $notice = signUp($name, $surName, $email, $gender, $birthDate, $_POST["password"]);
+   $notice = signUp($name, $surName, $email, $gender, $birthDate, $password);
  }
 } //kui on nuppu vajutatud
   

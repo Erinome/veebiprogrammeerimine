@@ -10,6 +10,12 @@
 	$monthToday = date("m");
 	$dayToday = date("d");
 	$year = date("Y");
+
+	$emailError = null;
+  	$passwordError = null;
+    $email = null;
+	$database = "if19_raner_re_1";
+ 
 	//setlocale(LC_TIME, 'et_EE');
 	
 	$weekDaysET = ["esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev", "pühapäev"];
@@ -90,6 +96,28 @@
 	
 ?>
 
+<?php
+    if(empty($_POST["email"])){
+        $emailError = "Palun sisesta oma email.";
+    } else {
+        $email = trim($_POST["email"]);
+    }
+    
+  
+    if(empty($_POST["password"])){
+        $passwordError = "Palun sisesta oma parool.";
+    } else {
+        $password = trim($_POST["password"]);
+    }
+
+    if (empty($emailError . $passwordError)) {
+    	$notice = signIn($email, $password);
+    }
+
+?>
+
+
+
 
 
 <body>
@@ -112,5 +140,38 @@
 	echo $randomImgHTML;
   ?>
 
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <style type="text/css">
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 350px; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Sisselogimine</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                <label>Kasutajanimi</label>
+                <input type="text" name="username" class="form-control" value="<?php echo $email; ?>">
+                <span class="help-block"><?php echo $emailError; ?></span>
+            </div>    
+            <div class="form-group <?php echo (!empty($passwordError)) ? 'has-error' : ''; ?>">
+                <label>Parool</label>
+                <input type="password" name="password" class="form-control">
+                <span class="help-block"><?php echo $passwordError; ?></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Logi sisse">
+            </div>
+          </form>
+    </div>    
 </body>
 </html>

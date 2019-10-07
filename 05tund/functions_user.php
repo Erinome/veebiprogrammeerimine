@@ -20,3 +20,14 @@
 	$conn->close();
  	return $notice;
  }	
+
+ function signIn($email, $password) {
+ 	if(mysqli_num_rows($stmt) == 1) {
+ 		mysqli_bind_result($stmt, $email, $password);
+ 		if (password_verify($password, $pwdhash)) {
+ 			$stmt->fetch(echo "Sisse logis: " .  $name . "" . $surname;)
+ 			
+ 		}
+ 	}
+ }
+
